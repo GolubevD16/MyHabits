@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class InfoRes{
     static let title: String = "Привычка за 21 день"
@@ -23,4 +24,5 @@ class InfoRes{
     
     источник: psychbook.ru
     """
+    static let purpleColor: UIColor = #colorLiteral(red: 0.7004410625, green: 0.2260589302, blue: 0.838178575, alpha: 1)
 }

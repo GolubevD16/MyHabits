@@ -34,6 +34,7 @@ class TabBar: UITabBarController {
                                                          tabBratTitle: Constans.infoTitle,
                                                          image: UIImage(systemName: Constans.infoImageName) ?? UIImage())
         ]
+        self.tabBar.tintColor = InfoRes.purpleColor
     }
     
     private func createNavigationController(for rootViewController: UIViewController,
@@ -41,9 +42,9 @@ class TabBar: UITabBarController {
                                             tabBratTitle: String,
                                             image: UIImage) -> UIViewController {
         let navController = UINavigationController(rootViewController: rootViewController)
-        navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         navController.topViewController?.title = title
+        navController.tabBarItem.title = tabBratTitle
         updateNavBarAppearance(navController: navController)
         return navController
     }
