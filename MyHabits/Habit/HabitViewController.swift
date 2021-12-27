@@ -9,6 +9,8 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
+    var habit: Habit?
+    
     lazy var scrollView:UIScrollView = {
         scrollView = UIScrollView()
         scrollView.toAutoLayout()
@@ -68,12 +70,35 @@ class HabitViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
+    func configure(with habit: Habit) {
+        self.habit = habit
+        habitView.textView.text = habit.name
+        habitView.colorView.backgroundColor = habit.color
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        habitView.dateLabel.text = formatter.string(from: habit.date)
+        habitView.datePicker.date = habit.date
+        //deleteButton.isHidden = false
+    }
+    
     @objc func cancel() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc func save() {
-        
+        guard let nameText = habitView.textView.text, !nameText.isEmpty else { return }
+        if let habit = habit{
+            print(habit)
+        }else{
+            let newHabit = Habit(
+                name: nameText,
+                date: habitView.datePicker.date,
+                color: habitView.colorView.backgroundColor ?? UIColor.orange
+            )
+            
+            HabitsStore.shared.habits.append(newHabit)
+        }
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func handleColorSelection() {

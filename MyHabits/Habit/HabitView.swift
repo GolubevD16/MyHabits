@@ -20,9 +20,11 @@ class HabitView: UIView {
     
     lazy var textView: UITextField = {
         textView = UITextField()
-        textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textView.textColor = .black
-        textView.placeholder = "что-то"
+        textView.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        textView.textColor = .blue
+        textView.tintColor = .blue
+        //textView.textColor = .black
+        textView.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         textView.toAutoLayout()
         
         return textView
