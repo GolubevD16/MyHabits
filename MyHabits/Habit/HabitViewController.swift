@@ -111,8 +111,9 @@ class HabitViewController: UIViewController {
     
     @objc func deleteHabit(){
         guard let habit = habitView.habit else { return }
-        let alert = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку: \(habit.name)?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { alert -> Void in
+        let alert = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку: \"\(habit.name)\"?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { alert -> Void in
             guard let index = HabitsStore.shared.habits.firstIndex(of: habit) else { return }
             HabitsStore.shared.habits.remove(at: index)
             HabitsStore.shared.save()
@@ -123,7 +124,7 @@ class HabitViewController: UIViewController {
                 self?.delegate?.close()
             })
         }))
-        alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: nil))
+        
         present(alert, animated: true, completion: nil)
     }
     
