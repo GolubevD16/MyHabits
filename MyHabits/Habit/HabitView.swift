@@ -9,6 +9,8 @@ import UIKit
 
 class HabitView: UIView {
     
+    var habit: Habit?
+    
     lazy var firstLabel: UILabel = {
         firstLabel = UILabel()
         firstLabel.text = "Название"
@@ -91,6 +93,18 @@ class HabitView: UIView {
         return datePicker
     }()
     
+    lazy var deleteButton: UIButton = {
+        deleteButton = UIButton()
+        deleteButton.setTitle("Удалить привычку", for: .normal)
+        deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        deleteButton.setTitleColor(.red, for: .normal)
+        deleteButton.titleLabel?.textAlignment = .center
+        deleteButton.toAutoLayout()
+        deleteButton.isHidden = true
+        
+        return deleteButton
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -101,7 +115,7 @@ class HabitView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.addSubviews([firstLabel, textView, secondLabel, colorView, thirdLabel, timeLabel, datePicker, dateLabel])
+        self.addSubviews([firstLabel, textView, secondLabel, colorView, thirdLabel, timeLabel, datePicker, dateLabel, deleteButton])
         NSLayoutConstraint.activate([
             firstLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             firstLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 22),
@@ -129,6 +143,21 @@ class HabitView: UIView {
             
             dateLabel.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor),
             dateLabel.topAnchor.constraint(equalTo: timeLabel.topAnchor),
+            
+            deleteButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            deleteButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
         ])
+    }
+    
+    func configure(with habit: Habit){
+        self.habit = habit
+        textView.text = habit.name
+        colorView.backgroundColor = habit.color
+        let time = habit.date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        dateLabel.text = formatter.string(from: time)
+        datePicker.date = habit.date
+        deleteButton.isHidden = false
     }
 }

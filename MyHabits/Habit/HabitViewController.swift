@@ -10,6 +10,7 @@ import UIKit
 class HabitViewController: UIViewController {
     
     var habit: Habit?
+    var delegate: CloseDelegate?
     
     lazy var scrollView:UIScrollView = {
         scrollView = UIScrollView()
@@ -39,6 +40,7 @@ class HabitViewController: UIViewController {
     
     private func setupView(){
         scrollView.addSubview(habitView)
+        habitView.deleteButton.addTarget(self, action: #selector(deleteHabit), for: .touchUpInside)
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -78,7 +80,7 @@ class HabitViewController: UIViewController {
         formatter.dateFormat = "HH:mm"
         habitView.dateLabel.text = formatter.string(from: habit.date)
         habitView.datePicker.date = habit.date
-        //deleteButton.isHidden = false
+        //habitView.deleteButton.isHidden = false
     }
     
     @objc func cancel() {
@@ -87,8 +89,14 @@ class HabitViewController: UIViewController {
     
     @objc func save() {
         guard let nameText = habitView.textView.text, !nameText.isEmpty else { return }
-        if let habit = habit{
-            print(habit)
+        if let habit = habit, let index = HabitsStore.shared.habits.firstIndex(of: habit){
+            HabitsStore.shared.habits[index].name = nameText
+            HabitsStore.shared.habits[index].date = habitView.datePicker.date
+            HabitsStore.shared.habits[index].color = habitView.colorView.backgroundColor ?? UIColor.orange
+            HabitsStore.shared.save()
+            
+            let habitDetailsVC = HabitDetailViewController()
+            habitDetailsVC.navigationItem.title = nameText
         }else{
             let newHabit = Habit(
                 name: nameText,
@@ -99,6 +107,24 @@ class HabitViewController: UIViewController {
             HabitsStore.shared.habits.append(newHabit)
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func deleteHabit(){
+        guard let habit = habitView.habit else { return }
+        let alert = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку: \(habit.name)?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { alert -> Void in
+            guard let index = HabitsStore.shared.habits.firstIndex(of: habit) else { return }
+            HabitsStore.shared.habits.remove(at: index)
+            HabitsStore.shared.save()
+            
+            if let _ = self.delegate {print("1")}
+            
+            self.dismiss(animated: true, completion: { [weak self] in
+                self?.delegate?.close()
+            })
+        }))
+        alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleColorSelection() {
@@ -131,7 +157,10 @@ class HabitViewController: UIViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        let scrolSize = self.habitView.datePicker.frame.maxY + keyboardSize.height - self.view.bounds.maxY + 8 + self.view.safeAreaInsets.top
+        let scrolSize =  habitView.deleteButton.isHidden ?
+            self.habitView.datePicker.frame.maxY + keyboardSize.height - self.view.bounds.maxY + 8 + self.view.safeAreaInsets.top :
+            self.habitView.deleteButton.frame.maxY + keyboardSize.height - self.view.bounds.maxY + 8 + self.view.safeAreaInsets.top
+        
         scrollView.contentSize = CGSize(width: habitView.bounds.width, height: habitView.bounds.height + scrolSize)
         scrollView.contentOffset = CGPoint(x: 0, y: 22)
         scrollView.isScrollEnabled = true

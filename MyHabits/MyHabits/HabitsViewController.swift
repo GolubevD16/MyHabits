@@ -98,15 +98,21 @@ class HabitsViewController: UIViewController {
 }
 
 extension HabitsViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.section == 1 {
-//            let habitDetailsVc = HabitDetailsViewController()
-//            let habit = shared.habits[indexPath.item]
-//            habitDetailsVc.habit = habit
-//            habitDetailsVc.navigationItem.title = habit.name
-//            navigationController?.pushViewController(habitDetailsVc, animated: true)
-//        }
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let habitDetailsVc = HabitDetailViewController()
+            
+            var habs = HabitsStore.shared.habits
+            habs = habs.sorted(by: { hab1, hab2 in
+                hab1.dateString < hab2.dateString
+            })
+            
+            let habit = habs[indexPath.item]
+            habitDetailsVc.habit = habit
+            habitDetailsVc.navigationItem.title = habit.name
+            navigationController?.pushViewController(habitDetailsVc, animated: true)
+        }
+    }
 }
 
 extension HabitsViewController: UICollectionViewDataSource {
