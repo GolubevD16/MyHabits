@@ -13,8 +13,8 @@ class HabitView: UIView {
     
     lazy var firstLabel: UILabel = {
         firstLabel = UILabel()
-        firstLabel.text = "Название"
-        firstLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        firstLabel.text = HabRes.firstLabelText
+        firstLabel.font = HabRes.semibold13
         firstLabel.toAutoLayout()
         
         return firstLabel
@@ -22,11 +22,10 @@ class HabitView: UIView {
     
     lazy var textView: UITextField = {
         textView = UITextField()
-        textView.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        textView.font = HabRes.semibold17
         textView.textColor = .blue
         textView.tintColor = .blue
-        //textView.textColor = .black
-        textView.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        textView.placeholder = HabRes.textViewPlaceholder
         textView.toAutoLayout()
         
         return textView
@@ -34,8 +33,8 @@ class HabitView: UIView {
     
     lazy var secondLabel: UILabel = {
         secondLabel = UILabel()
-        secondLabel.text = "Цвет"
-        secondLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        secondLabel.text = HabRes.secondLabelText
+        secondLabel.font = HabRes.semibold13
         secondLabel.toAutoLayout()
         
         return secondLabel
@@ -53,8 +52,8 @@ class HabitView: UIView {
     
     lazy var thirdLabel: UILabel = {
         thirdLabel = UILabel()
-        thirdLabel.text = "Дата"
-        thirdLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        thirdLabel.text = HabRes.thirdLabelText
+        thirdLabel.font = HabRes.semibold13
         thirdLabel.toAutoLayout()
         
         return thirdLabel
@@ -62,8 +61,8 @@ class HabitView: UIView {
     
     lazy var timeLabel: UILabel = {
         timeLabel = UILabel()
-        timeLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        timeLabel.text = "Каждый день в "
+        timeLabel.font = HabRes.regular17
+        timeLabel.text = HabRes.timeLabelText
         timeLabel.toAutoLayout()
         
         return timeLabel
@@ -72,10 +71,10 @@ class HabitView: UIView {
     lazy var dateLabel: UILabel = {
         dateLabel = UILabel()
         dateLabel.textColor = InfoRes.purpleColor
-        dateLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        dateLabel.font = HabRes.regular17
         var time = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = HabRes.dateFormat
         dateLabel.text = formatter.string(from: time)
         dateLabel.toAutoLayout()
         
@@ -95,7 +94,7 @@ class HabitView: UIView {
     
     lazy var deleteButton: UIButton = {
         deleteButton = UIButton()
-        deleteButton.setTitle("Удалить привычку", for: .normal)
+        deleteButton.setTitle(HabRes.deleteButtonTitle, for: .normal)
         deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         deleteButton.setTitleColor(.red, for: .normal)
         deleteButton.titleLabel?.textAlignment = .center
@@ -155,7 +154,7 @@ class HabitView: UIView {
         colorView.backgroundColor = habit.color
         let time = habit.date
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = HabRes.dateFormat
         dateLabel.text = formatter.string(from: time)
         datePicker.date = habit.date
         deleteButton.isHidden = false

@@ -15,7 +15,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
             
     lazy var statusLabel: UILabel = {
         statusLabel = UILabel(frame: .zero)
-        statusLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        statusLabel.font = HabRes.regular13
         statusLabel.textColor = .systemGray
         statusLabel.toAutoLayout()
         
@@ -24,7 +24,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     
     lazy var procentLabel: UILabel = {
         procentLabel = UILabel(frame: .zero)
-        procentLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        procentLabel.font = HabRes.regular13
         procentLabel.textColor = .systemGray
         procentLabel.toAutoLayout()
         
@@ -47,7 +47,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         progressView.layer.cornerRadius = 3.5
         progressView.progressTintColor = .purple
         progressView.progressViewStyle = .bar
-        progressView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
+        progressView.backgroundColor = HabRes.grayColor
         progressView.toAutoLayout()
         
         return progressView
@@ -95,11 +95,11 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     func stateText(with progress: Float) -> String {
         switch progress {
         case 0..<0.5:
-            return "Время начинать"
+            return HabRes.firstStatus
         case 0.5..<1.0:
-            return "Все получится!"
+            return HabRes.secondStatus
         case 1.0...:
-            return "Молодец!"
+            return HabRes.doneStatus
         default:
             return "Ошибка"
         }

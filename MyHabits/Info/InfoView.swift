@@ -27,7 +27,7 @@ class InfoView: UIView {
     lazy var textTitle: UILabel = {
         textTitle = UILabel()
         textTitle.text = InfoRes.title
-        textTitle.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        textTitle.font = HabRes.semibold20
         textTitle.toAutoLayout()
         
         return textTitle
@@ -36,7 +36,7 @@ class InfoView: UIView {
     lazy var textView: UITextView = {
         textView = UITextView()
         textView.text = InfoRes.text
-        textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        textView.font = HabRes.regular17
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
         textView.toAutoLayout()
@@ -72,7 +72,6 @@ class InfoView: UIView {
             textView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             textView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             textView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-            
         ])
     }
     

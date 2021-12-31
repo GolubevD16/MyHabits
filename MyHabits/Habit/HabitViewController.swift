@@ -65,8 +65,8 @@ class HabitViewController: UIViewController {
     private func setupNavBar(){
         navigationController?.navigationBar.tintColor = InfoRes.purpleColor
                 
-        let leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
-        let rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
+        let leftBarButtonItem = UIBarButtonItem(title: HabRes.leftButtonTitle, style: .plain, target: self, action: #selector(cancel))
+        let rightBarButtonItem = UIBarButtonItem(title: HabRes.rightButtonTitle, style: .plain, target: self, action: #selector(save))
                 
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.rightBarButtonItem = rightBarButtonItem
@@ -77,10 +77,9 @@ class HabitViewController: UIViewController {
         habitView.textView.text = habit.name
         habitView.colorView.backgroundColor = habit.color
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = HabRes.dateFormat
         habitView.dateLabel.text = formatter.string(from: habit.date)
         habitView.datePicker.date = habit.date
-        //habitView.deleteButton.isHidden = false
     }
     
     @objc func cancel() {
@@ -111,15 +110,13 @@ class HabitViewController: UIViewController {
     
     @objc func deleteHabit(){
         guard let habit = habitView.habit else { return }
-        let alert = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку: \"\(habit.name)\"?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { alert -> Void in
+        let alert = UIAlertController(title: HabRes.alertTitle, message: "\(HabRes.alertMes): \"\(habit.name)\"?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: HabRes.alertFirstButtonText, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: HabRes.alertSecondButtonText, style: .destructive, handler: { alert -> Void in
             guard let index = HabitsStore.shared.habits.firstIndex(of: habit) else { return }
             HabitsStore.shared.habits.remove(at: index)
             HabitsStore.shared.save()
-            
-            if let _ = self.delegate {print("1")}
-            
+                        
             self.dismiss(animated: true, completion: { [weak self] in
                 self?.delegate?.close()
             })
@@ -137,7 +134,7 @@ class HabitViewController: UIViewController {
     
     func getDateFromPicker(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = HabRes.dateFormat
         formatter.string(from: habitView.datePicker.date)
         habitView.dateLabel.text = formatter.string(from: habitView.datePicker.date)
     }

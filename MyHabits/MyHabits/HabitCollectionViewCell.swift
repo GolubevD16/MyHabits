@@ -18,7 +18,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
             
     lazy var habitNameLabel: UILabel = {
         habitNameLabel = UILabel(frame: .zero)
-        habitNameLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        habitNameLabel.font = HabRes.semibold17
         habitNameLabel.textColor = .systemGray2
         habitNameLabel.numberOfLines = 2
         habitNameLabel.toAutoLayout()
@@ -28,7 +28,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     lazy var habitDateLabel: UILabel = {
         habitDateLabel = UILabel(frame: .zero)
-        habitDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        habitDateLabel.font = HabRes.regular12
         habitDateLabel.textColor = .systemGray2
         habitDateLabel.toAutoLayout()
         
@@ -47,7 +47,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     lazy var habitCountTrackLabel: UILabel = {
         habitCountTrackLabel = UILabel(frame: .zero)
-        habitCountTrackLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        habitCountTrackLabel.font = HabRes.regular13
         habitCountTrackLabel.textColor = .systemGray
         habitCountTrackLabel.toAutoLayout()
         
@@ -92,7 +92,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         habitNameLabel.text = habit.name
         habitNameLabel.textColor = habit.color
         habitDateLabel.text = habit.dateString
-        habitCountTrackLabel.text = "Счетчик:  \(habit.trackDates.count)"
+        habitCountTrackLabel.text = "\(HabRes.count) \(habit.trackDates.count)"
         let checkImage = habit.isAlreadyTakenToday ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
         habitCheckImageView.image = checkImage
         habitCheckImageView.tintColor = habit.color

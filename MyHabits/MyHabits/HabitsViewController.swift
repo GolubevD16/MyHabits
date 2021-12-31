@@ -29,8 +29,7 @@ class HabitsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //navigationController?.navigationBar.prefersLargeTitles = true
+
         collectionView.reloadData()
     }
     
@@ -66,7 +65,7 @@ class HabitsViewController: UIViewController {
             let navHabit = UINavigationController(rootViewController: habitVc)
             updateNavBarAppearance(navController: navHabit)
             navHabit.navigationBar.prefersLargeTitles = false
-            habitVc.navigationItem.title = "Создать"
+        habitVc.navigationItem.title = HabRes.createNagigationTitle
             navHabit.modalPresentationStyle = .fullScreen
             present(navHabit, animated: true, completion: nil)
     }
